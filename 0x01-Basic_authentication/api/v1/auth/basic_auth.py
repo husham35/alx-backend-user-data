@@ -23,7 +23,7 @@ class BasicAuth(Auth):
         - None if authorization_header is either None, not a string, or
           doesn't start by Basic, else the value after Basic.
         """
-        if type(authorization_header) == str:
+        if isinstance(authorization_header) == str:
             pattern = r'Basic (?P<token>.+)'  # define regex pattern
             patt_match = re.fullmatch(pattern, authorization_header.strip())
             if patt_match is not None:
@@ -40,7 +40,7 @@ class BasicAuth(Auth):
         - None if base64_authorization_header is either None, not a string, or
           is not a valid Base64, else the decoded value as UTF8 string.
         """
-        if type(base64_authorization_header) == str:
+        if isinstance(base64_authorization_header) == str:
             try:
                 res = base64.b64decode(
                     base64_authorization_header,
@@ -61,7 +61,7 @@ class BasicAuth(Auth):
         - None, None if decoded_base64_authorization_header is None, is not a
         string, doesn't contain `:`, else the email and user password
         """
-        if type(decoded_base64_authorization_header) == str:
+        if isinstance(decoded_base64_authorization_header) == str:
             pattern = r'(?P<user>[^:]+):(?P<password>.+)'
             patt_match = re.fullmatch(
                 pattern,
@@ -85,7 +85,7 @@ class BasicAuth(Auth):
           email equal to user_email, user_pwd is not the password of the user,
           else the found user
         """
-        if type(user_email) == str and type(user_pwd) == str:
+        if isinstance(user_email) == str and type(user_pwd) == str:
             try:
                 users = User.search({'email': user_email})
             except Exception:
