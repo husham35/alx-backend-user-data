@@ -40,7 +40,7 @@ class BasicAuth(Auth):
         - None if base64_authorization_header is either None, not a string, or
           is not a valid Base64, else the decoded value as UTF8 string.
         """
-        if isinstance(base64_authorization_header) == str:
+        if type(base64_authorization_header) == str:
             try:
                 res = base64.b64decode(
                     base64_authorization_header,
@@ -61,7 +61,7 @@ class BasicAuth(Auth):
         - None, None if decoded_base64_authorization_header is None, is not a
         string, doesn't contain `:`, else the email and user password
         """
-        if isinstance(decoded_base64_authorization_header) == str:
+        if type(decoded_base64_authorization_header) == str:
             pattern = r'(?P<user>[^:]+):(?P<password>.+)'
             patt_match = re.fullmatch(
                 pattern,
@@ -85,7 +85,7 @@ class BasicAuth(Auth):
           email equal to user_email, user_pwd is not the password of the user,
           else the found user
         """
-        if isinstance(user_email) == str and type(user_pwd) == str:
+        if type(user_email) == str and type(user_pwd) == str:
             try:
                 users = User.search({'email': user_email})
             except Exception:
