@@ -10,7 +10,7 @@ Base = declarative_base()
 
 class User(Base):
     """
-    User Model for users table
+    User Model for `users` table
     Columns:
      `id` - the integer primary key
      `email` - a non-nullable string

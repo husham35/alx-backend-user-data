@@ -17,7 +17,7 @@ class DB:
     def __init__(self) -> None:
         """Initialize a new DB instance
         """
-        self._engine = create_engine("sqlite:///a.db", echo=True)
+        self._engine = create_engine("sqlite:///a.db", echo=False)
         Base.metadata.drop_all(self._engine)
         Base.metadata.create_all(self._engine)
         self.__session = None
@@ -40,9 +40,11 @@ class DB:
         self._session.commit()
         return user
 
+
     def find_user_by(self, **kwargs) -> User:
         """
-        Find the first user that matches the given filter arguments
+        Returns the first row found in the users table as
+        filtered by the method’s input arguments
         """
         try:
             user = self._session.query(User).filter_by(**kwargs).one()
@@ -53,7 +55,9 @@ class DB:
             raise
 
     def update_user(self, user_id: int, **kwargs) -> None:
-        """Update the user with the given ID with the given attributes
+        """
+        Locates the user to update, then will update the user’s attributes as
+        passed in the method’s arguments then commit changes to the database.
         """
         user: User = self.find_user_by(id=user_id)
         for key in kwargs:
